@@ -3,13 +3,6 @@ import DocumentBuilder from './components/DocumentBuilder.tsx';
 import ProjectDashboard from './components/ProjectDashboard.tsx';
 import { LibraryData, ProjectNode, ProjectVersion, ProjectFile } from './types.ts';
 
-// 声明全局函数
-declare global {
-  interface Window {
-    hideAppLoader: () => void;
-  }
-}
-
 const INITIAL_LIBRARY: LibraryData = {
   variables: [
     { id: 'DEM_01', label: '受试者姓名缩写', type: 'text', format: '最多4位字母' },
@@ -33,13 +26,6 @@ const PROJECTS_STORAGE_KEY = 'docugen_pro_projects_v11';
 const App: React.FC = () => {
   const [projects, setProjects] = useState<ProjectFile[]>([]);
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
-
-  // 关键：渲染成功后隐藏加载屏
-  useEffect(() => {
-    if (typeof window.hideAppLoader === 'function') {
-      window.hideAppLoader();
-    }
-  }, []);
 
   useEffect(() => {
     const saved = localStorage.getItem(PROJECTS_STORAGE_KEY);
